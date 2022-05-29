@@ -7,7 +7,7 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
+
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -18,14 +18,17 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { useRouter } from 'next/router';
+import { Button } from '@mui/material';
+import { red } from '@mui/material/colors';
+import { PlayArrow } from '@mui/icons-material';
 
 const drawerWidth = 240;
 
 const menuItems = [
-	{text: 'Главная', href: '/'},
-	{text: 'Список треков', href: '/tracks'},
-	{text: 'Список альбомов', href: '/albums'},
-]
+  { text: 'Главная', href: '/' },
+  { text: 'Список треков', href: '/tracks' },
+  { text: 'Список альбомов', href: '/albums' },
+];
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean;
@@ -79,7 +82,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function Navbar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-	const router = useRouter()
+  const router = useRouter();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -104,7 +107,14 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+            <Button
+              startIcon={<PlayArrow />}
+              variant="text"
+              style={{ color: '#fff' }}
+              onClick={() => router.push('/')}
+            >
+              NewStar Studio
+            </Button>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -123,12 +133,16 @@ export default function Navbar() {
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'ltr' ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
           </IconButton>
         </DrawerHeader>
         <List>
-          {menuItems.map(({text, href}, index) => (
-            <ListItem button key={href} onClick = { () => router.push(href) }>
+          {menuItems.map(({ text, href }, index) => (
+            <ListItem button key={href} onClick={() => router.push(href)}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
